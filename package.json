@@ -1,0 +1,25 @@
+{
+  "name": "ecommerce_backend",
+  "version": "1.0.0",
+  "description": "E-commerce backend developed with Node.js and Express for managing products, users, and orders.",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rokayamahi/ecommerce_backend.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rokayamahi/ecommerce_backend/issues"
+  },
+  "homepage": "https://github.com/rokayamahi/ecommerce_backend#readme",
+  "dependencies": {
+    "dotenv": "^17.3.1",
+    "express": "^5.2.1",
+    "nodemon": "^3.1.14"
+  }
+}
