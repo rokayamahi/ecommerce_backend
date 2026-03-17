@@ -1,3 +1,4 @@
+const { sendEmail } = require("../helpers/sendEmail")
 const userModel = require("../model/user.model")
 const { apiResponse } = require("../utils/apiResponse")
 const { asyncHandler } = require("../utils/asynHandler")
@@ -8,7 +9,7 @@ exports.registrationController =asyncHandler(async (req, res)=> {
 
 
     // hash your password
-    const hashpassword = await bcrypt.hash (password, 12)
+    const hashpassword = await bcrypt.hash (password, 10)
     const user = new userModel ({
         email,
         name,
@@ -17,7 +18,7 @@ exports.registrationController =asyncHandler(async (req, res)=> {
     })
 
     await user.save()
-
+    sendEmail();
     apiResponse (res,201, "user created successfully", user)
 
     
