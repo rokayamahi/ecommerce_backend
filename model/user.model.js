@@ -24,9 +24,12 @@ const userSchema = new Schema({
         trim: true,
     },
     otp:{
-        type: Number,
+        type: String,
     },
-    verify:{
+    otpexpire:{
+        type: Date,
+    },
+    verified:{
         type: Boolean,
         default: false,
     },
@@ -39,6 +42,8 @@ const userSchema = new Schema({
         default: "user",
         trim: true,
     }
+},{
+    versionKey: false,
 })
 
 module.exports = mongoose.model("User", userSchema)
