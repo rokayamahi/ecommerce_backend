@@ -26,6 +26,9 @@ const userSchema = new Schema({
     otp:{
         type: String,
     },
+    forgetPasswordToken:{
+        type: String,
+    },
     otpexpire:{
         type: Date,
     },
