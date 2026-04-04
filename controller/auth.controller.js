@@ -96,7 +96,7 @@ exports.resendOtpController = asyncHandler(async (req, res) =>{
     user.otpexpire = Date.now() + 5 * 60 * 1000;
 
     await user.save(email, otp)
-    sendEmail(email, otp, verify);
+    sendEmail(email, otp, "verify");
 
     apiResponse(res,200, "Otp resend your email address")
 })
@@ -104,6 +104,7 @@ exports.resendOtpController = asyncHandler(async (req, res) =>{
 exports.forgetPasswordController = asyncHandler(async (req, res)=>{
     const {email} = req.body;
     const otp = otpGenerator.generate(6, { upperCaseAlphabets: false,lowerCaseAlphabets:false, specialChars: false });
+    const user = await userModel.findOne({ email });
 
     sendEmail(email, otp, "forget");
 
@@ -112,3 +113,20 @@ exports.forgetPasswordController = asyncHandler(async (req, res)=>{
     apiResponse(res, 200,"forget password otp send successfully")
 })
 
+exports.resetPasswordController = asyncHandler(async (req,res)=>{
+    const {email, otp, newpassword} = req.body;
+    const user =await userModel. findOne({email})
+    
+    if(!user){
+        apiResponse(res, 404, "user not found")
+    }else{
+        if(otp == user.forgetPasswordToken){
+            let hashPassword = await bcrypt.hash(newpassword, 10)
+            user.password = hashPassword,
+            await user.save()
+            apiResponse(res, 200,"passsword reset done")
+        }else{
+            apiResponse(res,401, "invalid otp! please try again")
+        }
+    }
+})
