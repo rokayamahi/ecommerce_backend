@@ -1,5 +1,6 @@
 const express = require("express");
-const { registrationController, loginController, otpVerifyController, resendOtpController, forgetPasswordController, resetPasswordController } = require("../../controller/auth.controller");
+const { registrationController, loginController, otpVerifyController, resendOtpController, forgetPasswordController, resetPasswordController, allUsersController } = require("../../controller/auth.controller");
+const { authorize } = require("../../middleware/Authorize");
 const router = express.Router()
 
 
@@ -14,6 +15,8 @@ router.post("/resend-otp", resendOtpController)
 
 router.post("/forget-password", forgetPasswordController)
 
-router.post("/reset-password", resetPasswordController)
+router.post("/reset-password", resetPasswordController);
+
+router.get("/all-users",authorize, allUsersController)
 
 module.exports = router;

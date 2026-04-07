@@ -48,8 +48,12 @@ exports.loginController = asyncHandler(async (req, res) => {
                 verified: findUser.verified,
                 role: findUser.role,
             }
-            const token =jwt.sign(user, process.env.PRIVATE_KEY)
-            return apiResponse(res, 200, "login successfull", {...user, token})
+            // const accesstoken =jwt.sign(user, process.env.PRIVATE_KEY, {
+            //     expiresIn: "1h"
+            // })
+            
+            req.session.user = user;
+            return apiResponse(res, 200, "login successfull", {...user})
         } else {
             return apiResponse(res, 401, "invalid credintial")
         }
@@ -129,4 +133,11 @@ exports.resetPasswordController = asyncHandler(async (req,res)=>{
             apiResponse(res,401, "invalid otp! please try again")
         }
     }
+})
+
+exports.allUsersController = asyncHandler(async (req, res)=>{
+    console.log(req.headers.cookie)
+    console.log(req.session)
+    const users = await userModel.find ({}).select("-otp -otpexpire")
+    apiResponse (res, 200, "users fetch successfully", users)
 })
