@@ -4,21 +4,23 @@ const app = express()
 const port = process.env.PORT || 5000;
 const { dbConfig } = require("./config/db");
 const { globalErrorHandler } = require("./utils/globalErrorHandler");
-const session = require('express-session')
+const cookieParser = require ("cookie-parser")
+// const session = require('express-session')
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
+app.use(cookieParser())
 
+// app.use(session({
+//     secret: process.env.PRIVATE_KEY,
+//     resave: false,
+//     saveUninitialized: false,
+//     cookie: {
+//         maxAge: 360000, 
+//         httpOnly: true,
+//         secure: false,
+//     }
+// }));
 //db connect
-app.use(session({
-    secret: process.env.PRIVATE_KEY,
-    resave: false,
-    saveUninitialized: false,
-    cookie: {
-        maxAge: 360000, 
-        httpOnly: true,
-        secure: false,
-    }
-}));
 dbConfig();
 
 
