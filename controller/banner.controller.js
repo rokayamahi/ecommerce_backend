@@ -2,8 +2,8 @@ const { decode } = require("jsonwebtoken");
 const bannerModel = require ("../model/banner.model")
 const {apiResponse} = require("../utils/apiResponse")
 const { asyncHandler } = require("../utils/asynHandler");
-const fs = require ("fs");
-const path = require ("path")
+const fs = require("fs");
+const path = require("path");
 
 exports.addBannerController =asyncHandler (async(req, res) =>{
 
@@ -44,4 +44,38 @@ exports.deleteBannerController = asyncHandler(async (req, res) =>{
     }
 
          
+})
+
+exports.getAllBannersController = asyncHandler(async (req, res) =>{
+    const banners = await bannerModel.find ({})
+
+    apiResponse(res, 200, "banner fetch successfull", banners)
+})
+
+exports.updateBannerController = asyncHandler(async (req, res) =>{
+    const {id} = req.params;
+    const image = req.body;
+    const {isActive} = req.body;
+    const findBanner = await bannerModel.findOne ({_id:id});
+
+    if(findBanner){
+        const folderpath = path.join (__dirname, "../uploads")
+        const filepath = findBanner.image.split ("/").pop();
+
+        fs.unlink(`${folderpath}/${filepath}`, async(err)=>{
+            if(err){
+                apiResponse(res,500, err.message)
+            }else{
+                findBanner.image =`${process.env.SERVER_URL}/${req.file.filename}`
+                if (isActive){
+                    findBanner.isActive = isActive;
+                }
+                await findBanner.save()
+
+                apiResponse (res, 200, "banner update", findBanner)
+            }
+        })
+    }else{
+        apiResponse(res, 400, "banner not found")
+    }
 })
