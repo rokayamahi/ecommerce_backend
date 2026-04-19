@@ -5,6 +5,7 @@ const { asyncHandler } = require("../utils/asynHandler")
 const bcrypt = require("bcrypt")
 const otpGenerator = require("otp-generator")
 const jwt = require("jsonwebtoken")
+const bannerModel = require("../model/banner.model")
 
 exports.registrationController = asyncHandler(async (req, res) => {
     const { email, name, password, phone } = req.body
@@ -147,3 +148,4 @@ exports.allUsersController = asyncHandler(async (req, res) => {
     const users = await userModel.find({}).select("-otp -otpexpire")
     apiResponse(res, 200, "users fetch successfully", users)
 })
+
