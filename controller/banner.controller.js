@@ -34,7 +34,7 @@ exports.deleteBannerController = asyncHandler(async (req, res) =>{
 
         fs.unlink(`${folderpath}/${filepath}`,(err)=>{
             if(err){
-                apiResponse(res,500, err.message)
+                apiResponse(res,500, err.message || "something went wrong")
             }else{
                 apiResponse(res, 200, "banner deleted")
             }

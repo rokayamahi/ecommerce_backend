@@ -9,7 +9,8 @@ const categorySchema = new Schema(
     },
     slug:{
       type: String,
-      required: [true, "slug is required"]
+      required: [true, "slug is required"],
+      unique: [true, "slug must be unique"]
     },
     name: {
       type: String,
