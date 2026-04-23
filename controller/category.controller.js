@@ -53,3 +53,30 @@ exports.getAllCategoryController = asyncHandler(async (req, res) =>{
 
     apiResponse(res, 200, "category fetch successfull", categories)
 })
+
+exports.updateCategoryController = asyncHandler(async (req, res) => {
+    const { slug } = req.params;
+    const { isActive } = req.body || {};
+    const findCategory = await categoryModel.findOne({ slug });
+
+    if (findCategory) {
+        const folderpath = path.join(__dirname, "../uploads");
+        const filepath = findCategory.image.split("/").pop();
+
+        fs.unlink(`${folderpath}/${filepath}`, async (err) => {
+            if (req.file) {
+                findCategory.image = `${process.env.SERVER_URL}/${req.file.filename}`;
+            }
+            
+            if (isActive !== undefined) {
+                findCategory.isActive = isActive;
+            }
+
+            await findCategory.save();
+            return apiResponse(res, 200, "category update", findCategory);
+        });
+
+    } else {
+        return apiResponse(res, 400, "category not found");
+    }
+});
