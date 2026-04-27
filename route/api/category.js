@@ -12,6 +12,6 @@ router.delete ("/delete-category/:slug", authorize, authorizeRole("admin"), dele
 
 router.get("/all-category", getAllCategoryController);
 
-router.patch("/update-category/:slug", authorize, authorizeRole("admin"), upload.single("category-image"), updateCategoryController)
+router.patch("/update-category/:slug", authorize, authorizeRole("admin"), upload.single("category-image"), updateCategoryController);
 
 module.exports = router;
