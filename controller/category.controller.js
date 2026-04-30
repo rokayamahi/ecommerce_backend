@@ -49,7 +49,7 @@ exports.deleteCategoryController = asyncHandler (async(req, res)=>{
 })
 
 exports.getAllCategoryController = asyncHandler(async (req, res) =>{
-    const categories = await categoryModel.find ({}).select("name slug image subcategory").populate("subcategory")
+    const categories = await categoryModel.find ({}).select("name slug image subcategory").populate("SubCategory")
 
     apiResponse(res, 200, "category fetch successfull", categories)
 })

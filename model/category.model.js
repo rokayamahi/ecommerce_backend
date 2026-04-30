@@ -21,7 +21,7 @@ const categorySchema = new Schema(
       type: Boolean,
       default: true,
     },
-    subcategory: [{ type: mongoose. Schema.Types.ObjectId, ref: "subCategory" }],
+    subcategory: [{ type: mongoose. Schema.Types.ObjectId, ref: "SubCategory" }],
   },
   {
     timestamps: true,

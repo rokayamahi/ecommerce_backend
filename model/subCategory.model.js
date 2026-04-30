@@ -26,10 +26,9 @@ const subCategorySchema = new Schema(
     },
   },
 
-  {
-    timestamps: true,
-    versionKey: false,
-  },
+    {timestamps: true,
+    versionKey: false,}
+  
 );
 
-module.exports = mongoose.model("subCategory", subCategorySchema);
+module.exports = mongoose.model("SubCategory", subCategorySchema);

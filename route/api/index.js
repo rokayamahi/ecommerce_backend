@@ -8,6 +8,8 @@ router.use ("/banner", require("./banner"));
 
 router.use ("/category", require("./category"));
 
-router.use ("/subcategory", require("./subCategory"))
+router.use ("/subcategory", require("./subCategory"));
+
+router.use ("/product", require("./product"));
 
 module.exports = router;
